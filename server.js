@@ -1,5 +1,6 @@
 const e = require("express");
 const express = require("express");
+const { Db } = require("mongodb");
 const mongoose = require("mongoose");
 const app = express();
 
@@ -7,8 +8,6 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
-
-
 
 mongoose.connect
 (process.env.MONGODB_URI || "mongodb://locahost/trackMyFit",
@@ -20,9 +19,9 @@ mongoose.connect
    console.log("Mongoose successfull connected.");
  });
 
- git add 
-
-
+connection.on("error", (err) => {
+  console.log("Mongoose connection error:", err);
+});
 
 app.get("/api/config", (req,res) => {
   res.json({
@@ -30,6 +29,32 @@ app.get("/api/config", (req,res) => {
   })
 });
 
+app.get("/api/workout" , (req, res) => {
+  db.workout.find({}).then(foundWorkout => {
+    res.json(foundWorkout);
+  })
+
+});
+
+app.get("/api/workout/:id", (req, res) => {
+  db.workout.find({_id: req.params.id}).then(foundWorkout => {
+    res.json(foundWorkout);
+  });
+
+app.post("/api/workout", (req, res) => {
+  db.workout.create(req.body).then((newWorkout) => {
+    res.json(newWorkout);
+  });
+});
+
+app.put("/api/workout/:id", (req, res) => {
+
+});
+
+
+app.delete("/api/workout/:id", (req, res) => {
+
+});
 app.listen(PORT, () => {
   console.log(`App is running on http://localhost${PORT}`);
 })
