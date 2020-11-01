@@ -26,13 +26,13 @@ connection.on("error", (err) => {
 app.get("/api/config", (req,res) => {
   res.json({
     success: true,
-  })
+  });
 });
 
 app.get("/api/workout" , (req, res) => {
   db.workout.find({}).then(foundWorkout => {
     res.json(foundWorkout);
-  })
+  });
 
 });
 
@@ -48,15 +48,18 @@ app.post("/api/workout", (req, res) => {
 });
 
 app.put("/api/workout/:id", (req, res) => {
-
+  db.workout.update({_id: req.params.id}, req.body).then((updateWorkout) => {
+    res.json(updateWorkout);
+  });
 });
-
 
 app.delete("/api/workout/:id", (req, res) => {
+  db.workout.findByIdAndupdate(req.params.id, req.body, {new: true}).then{(result) => {
+    res.json(result);
+  }
+  };
 
 });
+
 app.listen(PORT, () => {
-  console.log(`App is running on http://localhost${PORT}`);
-})
-
-
+  console.log( `App is running on http://localhost${PORT}`);
