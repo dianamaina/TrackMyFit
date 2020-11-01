@@ -1,10 +1,18 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
+
 const PORT = process.env.PORT || 3000;
-const ingredientsController = require("./controllers/ingredientsController");
-const pizzaController = require("./controllers/pizzaController")
-app.use(express.urlencoded({ extended: true }));
+
+app.get("/api/config", (req,res) => {
+  res.json({
+    success: true,
+  })
+});
+
+app.listen(PORT, () => {
+  console.log(`App is running on http://localhost${PORT}`);
+})
 app.use(express.json());
 mongoose.connect(
   process.env.MONGODB_URI || "mongodb://localhost/pizza-parlour",
