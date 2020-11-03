@@ -62,4 +62,4 @@ app.delete("/api/workout/:id", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log( `App is running on http://localhost${PORT}`);
+  console.log( `App is running on http://localhost$`)
